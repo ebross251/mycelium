@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@fontsource/literata/400.css';
+@import '@fontsource/literata/400-italic.css';
+@import '@fontsource/literata/500.css';
+@import '@fontsource/literata/500-italic.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+
+:root {
+  color-scheme: dark;
+
+  /* field */
+  --field: #0e1512; /* deep desaturated near-black green */
+  --haze: #16211d; /* cooler back layer */
+
+  /* surfaces */
+  --membrane: #f5e9d2; /* warm cream, used translucent — never at 100% */
+  --membrane-rim: #f8edd8; /* crisp perimeter stroke */
+  --ink: #101c17; /* text on membranes */
+
+  /* accents */
+  --live: #7fe3c4; /* foxfire — active state only */
+  --lichen: #c9dc55; /* selection in the term bank only */
+
+  /* chrome text on field */
+  --chrome: #8fa39b;
+  --chrome-dim: #6e837b;
+
+  --serif: 'Literata', Georgia, serif;
+  --sans: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--chrome);
+  background-color: var(--field);
+}
+
+button {
+  font-family: inherit;
+}
+
+/* React Flow chrome — align the built-in Controls with the field palette
+   instead of its default light theme. */
+.react-flow__controls {
+  box-shadow: none;
+}
+
+.react-flow__controls-button {
+  background: rgba(22, 33, 29, 0.75);
+  border: 1px solid rgba(143, 163, 155, 0.18);
+  border-bottom: 1px solid rgba(143, 163, 155, 0.18);
+  color: var(--chrome);
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(22, 33, 29, 0.95);
+  color: var(--live);
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+.react-flow__attribution {
+  background: transparent;
+  color: var(--chrome-dim);
+}
