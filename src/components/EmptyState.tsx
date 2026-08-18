@@ -1,4 +1,5 @@
-import { membraneStyle } from '../lib/membraneStyle'
+import { useState } from 'react'
+import { membraneStyle, membraneHoverStyle } from '../lib/membraneStyle'
 
 interface EmptyStateProps {
   onPlaceConcept: () => void
@@ -12,6 +13,8 @@ interface EmptyStateProps {
  * link beneath it.
  */
 export default function EmptyState({ onPlaceConcept, onGenerateInstead }: EmptyStateProps) {
+  const [hovered, setHovered] = useState(false)
+
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="pointer-events-auto flex flex-col items-center gap-5 text-center">
@@ -25,12 +28,15 @@ export default function EmptyState({ onPlaceConcept, onGenerateInstead }: EmptyS
         <button
           type="button"
           onClick={onPlaceConcept}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
           style={{
-            ...membraneStyle,
+            ...(hovered ? membraneHoverStyle : membraneStyle),
             fontFamily: 'var(--serif)',
             color: 'var(--ink)',
+            transition: 'background 200ms ease, border-color 200ms ease, box-shadow 200ms ease',
           }}
-          className="px-5 py-3.5 text-[15px]"
+          className="px-[10px] py-[7px] text-[15px]"
         >
           + Place a concept
         </button>

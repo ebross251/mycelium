@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
-import { Controls, ReactFlow, useReactFlow } from '@xyflow/react'
+import { ReactFlow, useReactFlow } from '@xyflow/react'
 import { AnimatePresence, motion } from 'motion/react'
 import ConceptNode from './ConceptNode'
 import FloatingEdge from './FloatingEdge'
@@ -8,6 +8,7 @@ import FieldBackground from './FieldBackground'
 import SearchBar from './SearchBar'
 import TermPanel from './TermPanel'
 import EmptyState from './EmptyState'
+import ViewportChrome from './ViewportChrome'
 import { useCanvas } from '../store/CanvasContext'
 import type { AppEdge } from '../types'
 
@@ -141,10 +142,23 @@ export default function Canvas() {
         proOptions={{ hideAttribution: true }}
       >
         <FieldBackground />
-        {hasNodes && <Controls position="bottom-right" showInteractive={false} />}
         <EdgeMarkerDefs />
         <ConnectionOverlay />
       </ReactFlow>
+
+      <AnimatePresence>
+        {hasNodes && (
+          <motion.div
+            key="viewport-chrome"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+          >
+            <ViewportChrome onAddConcept={() => canvas.createNodeAt(viewportCenter())} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {!hasNodes && (

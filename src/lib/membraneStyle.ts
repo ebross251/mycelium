@@ -15,6 +15,20 @@ export const membraneStyle: CSSProperties = {
   ].join(', '),
 }
 
+// A subtle preview of the selected treatment — same rim-brightening logic,
+// about a third of the way there, so hover reads as "about to be selected"
+// rather than a distinct third material.
+export const membraneHoverStyle: CSSProperties = {
+  borderRadius: 3,
+  background: 'rgba(245, 233, 210, 0.57)',
+  border: '1px solid rgba(160, 220, 200, 0.78)',
+  boxShadow: [
+    '0 0 20px 2px rgba(127, 227, 196, 0.08)',
+    '0 0 4px 1px rgba(180, 230, 215, 0.2)',
+    'inset 0 0 4px 1px rgba(180, 230, 215, 0.2)',
+  ].join(', '),
+}
+
 export const membraneSelectedStyle: CSSProperties = {
   borderRadius: 3,
   background: 'rgba(245, 233, 210, 0.62)',
@@ -24,4 +38,12 @@ export const membraneSelectedStyle: CSSProperties = {
     '0 0 4px 1px rgba(127, 227, 196, 0.35)',
     'inset 0 0 4px 1px rgba(127, 227, 196, 0.35)',
   ].join(', '),
+}
+
+// Chrome (toolbar) buttons use the same membrane material at reduced
+// intensity — fill 40%, no outer bloom, crisp rim only — so persistent
+// controls sit quieter on the field than actual map content.
+export const chromeMembraneStyle: CSSProperties = {
+  background: 'rgba(245, 233, 210, 0.40)',
+  border: '1px solid rgba(248, 237, 216, 0.70)',
 }
