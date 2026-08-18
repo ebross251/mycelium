@@ -15,6 +15,7 @@ function FloatingEdge({ id, source, target, data, selected }: EdgeProps<AppEdge>
   const label = data?.label ?? null
   const isEditing = canvas.editingEdgeId === id
   const [draft, setDraft] = useState(label ?? '')
+  const [hovered, setHovered] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -76,17 +77,24 @@ function FloatingEdge({ id, source, target, data, selected }: EdgeProps<AppEdge>
 
   return (
     <>
-      <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, ease: 'easeOut' }}>
+      <motion.g
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{ cursor: 'pointer' }}
+      >
         <BaseEdge
           id={id}
           path={path}
           markerEnd={label ? 'url(#mycelium-arrow-solid)' : 'url(#mycelium-arrow-dashed)'}
           style={{
             stroke: label ? '#CDE3D8' : '#7E948B',
-            strokeWidth: label ? 1.4 : 1.3,
-            strokeOpacity: selected ? 1 : label ? 0.8 : 0.5,
+            strokeWidth: selected || hovered ? 1.7 : label ? 1.4 : 1.3,
+            strokeOpacity: selected ? 1 : hovered ? 0.95 : label ? 0.8 : 0.5,
             strokeDasharray: label ? undefined : '5 6',
-            transition: 'stroke 200ms ease, stroke-opacity 200ms ease, stroke-dasharray 200ms ease',
+            transition: 'stroke 200ms ease, stroke-width 150ms ease, stroke-opacity 200ms ease, stroke-dasharray 200ms ease',
           }}
         />
       </motion.g>

@@ -15,6 +15,12 @@ export interface ConnectingState {
   sourceId: string
 }
 
+// A freshly created link opens straight into its edit state with this
+// prefilled — text is selected on focus, so typing over it is the expected
+// path. Deliberately not `null`: the map should never show a bare unlabeled
+// stub the instant a connection completes.
+const DEFAULT_LINK_LABEL = 'relates to'
+
 interface CanvasContextValue {
   nodes: AppNode[]
   edges: AppEdge[]
@@ -73,7 +79,7 @@ export function CanvasProvider({ children }: { children: ReactNode }) {
           source: current.sourceId,
           target: targetId,
           type: 'floating',
-          data: { label: null },
+          data: { label: DEFAULT_LINK_LABEL },
         }
         setEdges((eds) => [...eds, newEdge])
         setEditingEdgeId(newEdge.id)
@@ -102,11 +108,11 @@ export function CanvasProvider({ children }: { children: ReactNode }) {
           source: current.sourceId,
           target: newNodeId,
           type: 'floating',
-          data: { label: null },
+          data: { label: DEFAULT_LINK_LABEL },
         }
         setNodes((nds) => [...nds.map((n) => ({ ...n, selected: false })), newNode])
         setEdges((eds) => [...eds, newEdge])
-        setEditingNodeId(newNodeId)
+        setEditingEdgeId(newEdge.id)
         return null
       })
       setCursorFlow(null)
